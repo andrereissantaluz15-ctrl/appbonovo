@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de B.O. de Avarias - Nestlé</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- PDF Generator CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+    <!-- App Container to be converted to PDF -->
+    <div class="app-container" id="pdf-content">
+        <!-- Background Banner -->
+        <header class="header">
+            <div class="header-bg" style="background-image: url('Nestle Wallpaper And Background Image Net.jpg');">
+                <div class="header-overlay"></div>
+            </div>
+            <div class="header-content">
+
+                <h1>Registro de B.O.</h1>
+                <p>Relatório de Ocorrências com Produtos</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Informações Gerais -->
+            <section class="card section-geral">
+                <h2><i class="ph ph-file-text"></i> Dados da Ocorrência</h2>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="data">Data da Ocorrência</label>
+                        <input type="text" id="data" readonly style="background-color: #f0f0f0;">
+                    </div>
+                    <div class="input-group">
+                        <label for="transportadora">Transportadora</label>
+                        <select id="transportadora">
+                            <option value="" disabled selected>Selecione...</option>
+                            <option value="DISSUDES">DISSUDES</option>
+                            <option value="JT">JT</option>
+                            <option value="JADLOG">JADLOG</option>
+                            <option value="CORREIOS">CORREIOS</option>
+                            <option value="DIALOGO">DIALOGO</option>
+                            <option value="TEX SP">TEX SP</option>
+                            <option value="FAST">FAST</option>
+                            <option value="LOGAN">LOGAN</option>
+                            <option value="FAVELLALOG">FAVELLALOG</option>
+                            <option value="SAC SERVICE">SAC SERVICE</option>
+                            <option value="OUTRA">OUTRA (Informar...)</option>
+                        </select>
+                        <input type="text" id="nova-transportadora" class="hidden" style="margin-top: 8px;"
+                            placeholder="Digite o nome da transportadora">
+                    </div>
+                    <div class="input-group">
+                        <label for="delivery">Delivery / Ordem</label>
+                        <input type="text" id="delivery" placeholder="Nº da Delivery ou Ordem">
+                    </div>
+                    <div class="input-group">
+                        <label for="nf">Nota Fiscal</label>
+                        <input type="text" id="nf" placeholder="Nº da Nota Fiscal">
+                    </div>
+                    <div class="input-group full-width">
+                        <label for="rastreio">Rastreio</label>
+                        <input type="text" id="rastreio" placeholder="Código de Rastreio">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Materiais e Imagens (Formulário) - NOT print ready, handled separately -->
+            <div class="no-print interact-section">
+                <!-- Evidência (Image) -->
+                <section class="card section-imagem">
+                    <h2><i class="ph ph-camera"></i> Evidência Visual</h2>
+                    <p class="subtitle">Insira ou tire uma foto do material/avaria no dispositivo.</p>
+                    <input type="file" id="camera-input" accept="image/*" capture="environment" hidden>
+                    <input type="file" id="gallery-input" accept="image/*" multiple hidden>
+                    <div class="image-upload-options" style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px;">
+                        <div class="image-upload-wrapper" id="btn-camera">
+                            <div class="upload-content text-center"
+                                style="display:flex; flex-direction:column; align-items:center;">
+                                <i class="ph ph-camera"
+                                    style="font-size: 32px; color: var(--primary-light); margin-bottom: 8px;"></i>
+                                <strong>Tirar Foto</strong>
+                                <span style="font-size: 13px; color: var(--text-muted);">Usar a câmera</span>
+                            </div>
+                        </div>
+                        <div class="image-upload-wrapper" id="btn-gallery">
+                            <div class="upload-content text-center"
+                                style="display:flex; flex-direction:column; align-items:center;">
+                                <i class="ph ph-images"
+                                    style="font-size: 32px; color: var(--primary-light); margin-bottom: 8px;"></i>
+                                <strong>Galeria</strong>
+                                <span style="font-size: 13px; color: var(--text-muted);">Selecionar fotos</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Formulário para inserir materiais -->
+                <section class="card section-materiais-form">
+                    <h2><i class="ph ph-package"></i> Adicionar Material</h2>
+                    <input type="hidden" id="edit-id" value="">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label for="sku">SKU</label>
+                            <input type="text" id="sku" placeholder="Código do Produto">
+                        </div>
+                        <div class="input-group">
+                            <label for="lote">Lote</label>
+                            <input type="text" id="lote" placeholder="Lote do Produto">
+                        </div>
+                        <div class="input-group">
+                            <label for="quantidade">Quantidade</label>
+                            <input type="number" id="quantidade" min="1" placeholder="Qtd">
+                        </div>
+                        <div class="input-group">
+                            <label for="tipo-ocorrencia">Tipo de Ocorrência</label>
+                            <select id="tipo-ocorrencia">
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Avaria">Avaria</option>
+                                <option value="Falta">Falta</option>
+                                <option value="Outros">Outros</option>
+                                <option value="Vício de Embalagem">Vício de Embalagem</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions mt-3">
+                        <button id="btn-inserir-item" class="btn-primary">
+                            <i class="ph ph-plus-circle"></i> Inserir Item
+                        </button>
+                        <button id="btn-cancelar-edicao" class="btn-outline hidden">
+                            Cancelar Edição
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Listagem de Materiais -->
+            <section class="card section-lista-materiais">
+                <h2><i class="ph ph-list-dashes"></i> Itens da Ocorrência</h2>
+                <div class="table-responsive">
+                    <table id="tabela-materiais" class="hidden">
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Lote</th>
+                                <th>Qtd.</th>
+                                <th>Ocorrência</th>
+                                <th class="no-print actions-col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-materiais-body">
+                            <!-- Items inserted here via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="sem-itens" class="empty-state">
+                    <i class="ph ph-package"></i>
+                    <p>Nenhum item inserido. Preencha o formulário acima para adicionar materiais.</p>
+                </div>
+            </section>
+
+            <!-- Output de Imagem para o PDF (exibida apenas quando há imagem) -->
+            <section class="card print-image-section hidden" id="print-image-section">
+                <h2><i class="ph ph-image"></i> Evidência Anexada</h2>
+                <div class="image-preview-container">
+                    <div id="preview-images" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Gerado pelo Sistema Nestlé de B.O. de Avarias &bull; Uso Interno</p>
+        </footer>
+    </div>
+
+    <!-- Final Actions -->
+    <div class="fixed-actions no-print">
+        <button id="btn-gerar-pdf" class="btn-success">
+            <i class="ph ph-file-pdf"></i> Salvar e Baixar PDF
+        </button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
