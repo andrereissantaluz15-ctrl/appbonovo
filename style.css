@@ -264,6 +264,37 @@ input[readonly] {
 }
 
 /* Image Preview */
+.evidence-image-wrapper {
+    position: relative;
+    background: #fff;
+    border-radius: 8px;
+    padding: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.btn-delete-evidence {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(229, 0, 25, 0.1);
+    color: var(--secondary-color);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-delete-evidence:hover {
+    background: var(--secondary-color);
+    color: #fff;
+}
+
 .image-preview-container {
     display: flex;
     justify-content: center;

@@ -69,6 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = function (event) {
                 const imgData = event.target.result;
 
+                // Container individual para cada evidência, permitindo excluir uma foto específica.
+                const imageWrapper = document.createElement('div');
+                imageWrapper.className = 'evidence-image-wrapper';
+
                 const img = document.createElement('img');
                 img.src = imgData;
                 img.alt = 'Evidência da Ocorrência';
@@ -78,7 +82,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.style.borderRadius = '8px';
                 img.style.background = '#fff';
 
-                previewImages.appendChild(img);
+                const btnExcluir = document.createElement('button');
+                btnExcluir.type = 'button';
+                btnExcluir.className = 'btn-delete-evidence no-print';
+                btnExcluir.title = 'Excluir esta foto';
+                btnExcluir.innerHTML = '<i class="ph ph-trash"></i> Excluir foto';
+
+                btnExcluir.addEventListener('click', () => {
+                    imageWrapper.remove();
+
+                    // Se não houver mais evidências, esconde novamente a seção.
+                    if (previewImages.children.length === 0) {
+                        printImageSection.classList.add('hidden');
+                        btnCamera.style.borderColor = '';
+                        btnCamera.style.backgroundColor = '';
+                        btnGallery.style.borderColor = '';
+                        btnGallery.style.backgroundColor = '';
+                    }
+                });
+
+                imageWrapper.appendChild(img);
+                imageWrapper.appendChild(btnExcluir);
+                previewImages.appendChild(imageWrapper);
                 printImageSection.classList.remove('hidden');
             };
 
